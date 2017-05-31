@@ -5,7 +5,7 @@ import { observer } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ApplicationStyles from '../styles'
 
-import counterStore from '../stores/counter_store'
+import counterStore from '../stores/clippings_store'
 
 @observer
 export default class WelcomeScreen extends Component {

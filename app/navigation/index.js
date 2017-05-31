@@ -2,15 +2,15 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 
 import WelcomeScreen from '../containers/welcome_screen'
 import SecondScreen from '../containers/second_screen'
-import CounterScreen from '../containers/counter_screen'
+import ClippingsScreen from '../containers/clippings_screen'
 import CheckinScreen from '../containers/checkin_screen'
 import ThirdScreen from '../containers/third_screen'
 import MyHomeScreen from '../containers/myhome_screen'
 
 const WelcomeTab = StackNavigator({
+  ClippingsScreen: { screen: ClippingsScreen },
   WelcomeScreen: { screen: WelcomeScreen },
   SecondScreen: { screen: SecondScreen },
-  CounterScreen: { screen: CounterScreen },
 });
 
 const CheckinTab = StackNavigator({

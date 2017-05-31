@@ -1,7 +1,7 @@
 import {observable, action, useStrict} from 'mobx'
 import api from './api'
 useStrict(true);
-class CounterStore {
+class ClippingsStore {
   @observable counter = 0;
   @observable remoteCounter = 0;
   @observable clippings = [];
@@ -35,6 +35,6 @@ class CounterStore {
   }
 }
 
-const counterStore = new CounterStore;
+const clippingsStore = new ClippingsStore;
 
-export default counterStore;
+export default clippingsStore;

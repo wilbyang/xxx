@@ -5,13 +5,16 @@ import { observer } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ApplicationStyles from '../styles'
 
-import counterStore from '../stores/counter_store'
+import clippingsStore from '../stores/clippings_store'
 
 @observer
 export default class CounterScreen extends Component {
+  componentDidMount() {
+    clippingsStore.getFromRemote();
+  }
   static navigationOptions = {
     tabBarVisible: false,
-    title: 'Counter Screen',
+    title: '我的摘抄',
   };
   ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => {
@@ -21,15 +24,12 @@ export default class CounterScreen extends Component {
   render() {
     return (
       <View style={[styles.container, ApplicationStyles.container]}>
-        <Icon style={styles.welcome} name='building' size={30}></Icon>
-        <Button onPress={ ()=> counterStore.getFromRemote() }>
-          Back
-        </Button>
+
         <ListView
           enableEmptySections={true}
           automaticallyAdjustContentInsets={true}
           initialListSize={1}
-          dataSource={this.ds.cloneWithRows(counterStore.clippings.slice())}
+          dataSource={this.ds.cloneWithRows(clippingsStore.clippings.slice())}
           renderRow={this._renderRow}
           onEndReachedThreshold={1}
         />
@@ -41,10 +41,9 @@ export default class CounterScreen extends Component {
   _renderRow = (data) => {
     return (
       <TouchableOpacity>
-        <View style={{paddingTop:12}}>
-          <Text>{data.Title }</Text>
-          <Text>{data.Content}</Text>
-          <Text>{data.URL}</Text>
+        <View style={{padding:12}}>
+          <Text style={styles.textHead}>{data.Title }</Text>
+          <Text style={styles.textContent}>{data.Content}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -62,5 +61,13 @@ const styles = StyleSheet.create({
   },
   textRed: {
     color: 'red',
+  },
+  textHead: {
+    fontSize:18,
+    paddingBottom:6
+  },
+  textContent: {
+    paddingTop:6,
+    lineHeight:20
   },
 });

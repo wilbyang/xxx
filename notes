@@ -1,0 +1,4 @@
+<Icon style={styles.welcome} name='building' size={30}></Icon>
+        <Button onPress={ ()=> clippingsStore.getFromRemote() }>
+          Back
+        </Button>
