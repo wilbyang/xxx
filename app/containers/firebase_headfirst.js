@@ -3,7 +3,15 @@ import React, { Component, PropTypes } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, ListView } from 'react-native'
 import RNFetchBlob from 'react-native-fetch-blob'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import Button from "react-native-button";
+import t from 'tcomb-form-native'
+var Form = t.form.Form;
+// here we are: define your domain model
+var Message = t.struct({
+  from: t.String,              // a required string
+  msg: t.maybe(t.String),  // an optional string
+});
+var options = {};
 const config = {
   apiKey: "AIzaSyCWX2plVb3pYuwRYvh5sNQZqrEnG2Y-1Ak",
   authDomain: "notonlylanguage.firebaseapp.com",
@@ -23,8 +31,13 @@ window.Blob = Blob;
 const storage = firebase.storage();
 const auth = firebase.auth();
 const database = firebase.database();
-
 const messagesRef = database.ref('chat/conversation');
+
+const FBSDK = require('react-native-fbsdk');
+const {
+  LoginButton,
+  AccessToken
+} = FBSDK;
 
 const uploadImage = (uri, mime = 'application/octet-stream') => {
   return new Promise((resolve, reject) => {
@@ -100,6 +113,10 @@ export default class FirebaseHeadFirst extends Component {
       </View>
     );
   }
+  _savetoFB() {
+    var {from, msg} = this.refs.form.getValue();
+    messagesRef.push({from:from, msg:msg, time:new Date().getTime()});
+  }
   _pickImage() {
     this.setState({ uploadURL: '' })
 
@@ -112,11 +129,40 @@ export default class FirebaseHeadFirst extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <ListView dataSource = {this.state.dataSource}
                   renderRow={this._renderRow.bind(this)}
                   style = {styles.listview} />
-
+        <Form
+          ref="form"
+          type={Message}
+          options={options}
+        />
+        <LoginButton
+          readPermissions={["public_profile"]}
+          publishPermissions={["publish_actions"]}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                alert("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                alert("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+                    auth.signInWithCredential(credential).then((result) => {
+                      alert("success");
+                    }, (error) => {
+                      alert("error");
+                    })
+                    alert(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => alert("logout.")}/>
       </View>
     )
   }
@@ -125,8 +171,10 @@ export default class FirebaseHeadFirst extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50,
+    padding: 20,
+    backgroundColor: '#ffffff',
   },
   listview:{}
 });
