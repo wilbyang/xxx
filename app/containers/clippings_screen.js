@@ -13,8 +13,10 @@ export default class CounterScreen extends Component {
     clippingsStore.getFromRemote();
   }
   static navigationOptions = {
-    tabBarVisible: false,
     title: '我的摘抄',
+    tabBarIcon: ({tintColor}) => (
+      <Icon name='user' color={tintColor} size={24}/>
+    )
   };
   ds = new ListView.DataSource({
     rowHasChanged: (r1, r2) => {
