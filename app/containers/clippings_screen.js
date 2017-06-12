@@ -1,19 +1,29 @@
-import React, { Component, PropTypes } from 'react'
-import { Text, View, StyleSheet, ListView, TouchableOpacity } from 'react-native'
-import Button from 'react-native-button'
-import { observer } from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import ApplicationStyles from '../styles'
+import React, { Component, PropTypes } from 'react';
+import { Text, View, StyleSheet, ListView, TouchableOpacity } from 'react-native';
+import Button from 'react-native-button';
+import { observer } from 'mobx-react/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ApplicationStyles from '../styles';
 
-import clippingsStore from '../stores/clippings_store'
+import clippingsStore from '../stores/clippings_store';
+import I18n from 'react-native-i18n';
+I18n.fallbacks = true
 
+I18n.translations = {
+  en: {
+    title: '我的摘抄'
+  },
+  fr: {
+    title: 'Bonjour!'
+  }
+}
 @observer
 export default class CounterScreen extends Component {
   componentDidMount() {
     clippingsStore.getFromRemote();
   }
   static navigationOptions = {
-    title: '我的摘抄',
+    title: I18n.t('title'),
     tabBarIcon: ({tintColor}) => (
       <Icon name='user' color={tintColor} size={24}/>
     )

@@ -2,3 +2,5 @@
         <Button onPress={ ()=> clippingsStore.getFromRemote() }>
           Back
         </Button>
+
+rn 对fb的编译需要在/Documents/FacebookSDK路径存在
