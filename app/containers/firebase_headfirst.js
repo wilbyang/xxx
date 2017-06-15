@@ -1,10 +1,10 @@
-import firebase from 'firebase'
-import React, { Component, PropTypes } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, ListView } from 'react-native'
-import RNFetchBlob from 'react-native-fetch-blob'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Button from "react-native-button";
-import t from 'tcomb-form-native'
+import firebase from 'firebase';
+import React, { Component, PropTypes } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, ListView, Button, Platform } from 'react-native';
+import RNFetchBlob from 'react-native-fetch-blob';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import t from 'tcomb-form-native';
+import ImagePicker from 'react-native-image-picker';
 var Form = t.form.Form;
 // here we are: define your domain model
 var Message = t.struct({
@@ -39,13 +39,20 @@ const {
   AccessToken
 } = FBSDK;
 
-const uploadImage = (uri, mime = 'application/octet-stream') => {
+const uploadImage = (response) => {
   return new Promise((resolve, reject) => {
-    const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
+    const uploadUri = Platform.OS === 'ios' ? response.uri.replace('file://', '') : response.uri
+    //const sessionId = new Date().getTime()
     const sessionId = new Date().getTime()
     let uploadBlob = null
-    const imageRef = storage.ref('images').child(`${sessionId}`)
-
+    const imageRef = storage.ref('images').child(`${response.fileName}`)
+    let ext = response.fileName.split('.')[1].toLowerCase();
+    var mime = "application/octet-stream";
+    if(ext === "jpg") {
+      mime = "image/jpg";
+    } else if(ext === "png") {
+      mime = "image/png";
+    }
     fs.readFile(uploadUri, 'base64')
       .then((data) => {
         return Blob.build(data, { type: `${mime};BASE64` })
@@ -86,12 +93,12 @@ export default class FirebaseHeadFirst extends Component {
 
   }
   componentDidMount() {
-    messagesRef.limitToLast(12).on('value', (snap) => {
+    messagesRef.limitToLast(120).on('value', (snap) => {
+      console.log("xxhh");
       // get children as an array
       var items = [];
       snap.forEach((child) => {
         items.push({
-
           from: child.val().from,
           content: child.val().msg,
           _key: child.key
@@ -101,7 +108,6 @@ export default class FirebaseHeadFirst extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(items)
       });
-
     });
   }
 
@@ -109,7 +115,7 @@ export default class FirebaseHeadFirst extends Component {
     return (
       <View>
         <Text>From: {item.from}</Text>
-        <Text>{item.content}</Text>
+        <Text>{item.msg}</Text>
       </View>
     );
   }
@@ -121,7 +127,7 @@ export default class FirebaseHeadFirst extends Component {
     this.setState({ uploadURL: '' })
 
     ImagePicker.launchImageLibrary({}, response  => {
-      uploadImage(response.uri)
+      uploadImage(response)
         .then(url => this.setState({ uploadURL: url }))
         .catch(error => console.log(error))
     })
@@ -129,41 +135,53 @@ export default class FirebaseHeadFirst extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ListView dataSource = {this.state.dataSource}
-                  renderRow={this._renderRow.bind(this)}
-                  style = {styles.listview} />
-        <Form
-          ref="form"
-          type={Message}
-          options={options}
-        />
-        <LoginButton
-          readPermissions={["public_profile"]}
-          publishPermissions={["publish_actions"]}
-          onLoginFinished={
-            (error, result) => {
-              if (error) {
-                alert("login has error: " + result.error);
-              } else if (result.isCancelled) {
-                alert("login is cancelled.");
-              } else {
-                AccessToken.getCurrentAccessToken().then(
-                  (data) => {
-                    const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
-                    auth.signInWithCredential(credential).then((result) => {
-                      alert("success");
-                    }, (error) => {
-                      alert("error");
-                    })
-                    alert(data.accessToken.toString())
-                  }
-                )
-              }
+    <View style={styles.container}>
+      <ListView dataSource = {this.state.dataSource}
+                renderRow={this._renderRow}
+                style = {styles.listview} />
+      <Form
+        ref="form"
+        type={Message}
+        options={options}
+      />
+      <Button
+        onPress={this._pickImage.bind(this)}
+        title="Learn More"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
+      <Button
+        onPress={this._savetoFB.bind(this)}
+        title="Learn More"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"
+      />
+      <LoginButton
+        readPermissions={["public_profile"]}
+        publishPermissions={["publish_actions"]}
+        onLoginFinished={
+          (error, result) => {
+            if (error) {
+              alert("login has error: " + result.error);
+            } else if (result.isCancelled) {
+              alert("login is cancelled.");
+            } else {
+              AccessToken.getCurrentAccessToken().then(
+                (data) => {
+                  const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+                  auth.signInWithCredential(credential).then((result) => {
+                    alert("success");
+                  }, (error) => {
+                    alert("error");
+                  })
+                  alert(data.accessToken.toString())
+                }
+              )
             }
           }
-          onLogoutFinished={() => alert("logout.")}/>
-      </View>
+        }
+        onLogoutFinished={() => alert("logout.")}/>
+    </View>
     )
   }
 }
@@ -176,5 +194,5 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#ffffff',
   },
-  listview:{}
+  listview:{height:200, backgroundColor:"green"}
 });
