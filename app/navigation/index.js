@@ -9,7 +9,6 @@ import ThirdScreen from '../containers/third_screen';
 import SignIn from '../containers/SignIn';
 import SignUp from '../containers/SignUp';
 
-
 export const SignedOut = StackNavigator({
   SignUp: {
     screen: SignUp,
@@ -24,7 +23,6 @@ export const SignedOut = StackNavigator({
     }
   }
 });
-
 
 const WelcomeTab = StackNavigator({
   ClippingsScreen: { screen: ClippingsScreen },

@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-import { onSignIn } from "../auth";
+import { onSignIn, isSignedInByFirebase } from "../auth";
 
 export default ({ navigation }) => (
   <View style={{ paddingVertical: 20 }}>
@@ -16,7 +16,7 @@ export default ({ navigation }) => (
         backgroundColor="#03A9F4"
         title="SIGN IN"
         onPress={() => {
-          onSignIn().then(() => navigation.navigate("SignedIn"));
+          isSignedInByFirebase("yang.wilby@gmail.com", "yangbo").then(() => navigation.navigate("SignedIn"));
         }}
       />
     </Card>

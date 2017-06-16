@@ -17,6 +17,11 @@ export default class App extends React.Component {
       .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
       .catch(err => alert("An error occurred"));
   }
+  LogoutHandler() {
+    this.setState({
+      signedIn: false
+    });
+  }
 
   render() {
     const { checkedSignIn, signedIn } = this.state;

@@ -1,12 +1,12 @@
 
 import React, { Component, PropTypes } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ListView, Button, Platform } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, ListView, Platform } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import t from 'tcomb-form-native';
 import ImagePicker from 'react-native-image-picker';
 import {fb} from '../stores/api';
-
+import { Card, Button, FormLabel, FormInput } from "react-native-elements";
 
 var Form = t.form.Form;
 // here we are: define your domain model
@@ -151,6 +151,15 @@ export default class FirebaseHeadFirst extends Component {
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />
+
+      <Button
+        buttonStyle={{ marginTop: 20 }}
+        backgroundColor="transparent"
+        textStyle={{ color: "#bcbec1" }}
+        title="Sign Out"
+        onPress={() => this.props.navigation.navigate("SignedOut")}
+      />
+
       <LoginButton
         readPermissions={["public_profile"]}
         publishPermissions={["publish_actions"]}
