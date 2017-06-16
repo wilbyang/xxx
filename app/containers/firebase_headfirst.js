@@ -1,10 +1,13 @@
-import firebase from 'firebase';
+
 import React, { Component, PropTypes } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, ListView, Button, Platform } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import t from 'tcomb-form-native';
 import ImagePicker from 'react-native-image-picker';
+import {fb} from '../stores/api';
+
+
 var Form = t.form.Form;
 // here we are: define your domain model
 var Message = t.struct({
@@ -12,15 +15,7 @@ var Message = t.struct({
   msg: t.maybe(t.String),  // an optional string
 });
 var options = {};
-const config = {
-  apiKey: "AIzaSyCWX2plVb3pYuwRYvh5sNQZqrEnG2Y-1Ak",
-  authDomain: "notonlylanguage.firebaseapp.com",
-  databaseURL: "https://notonlylanguage.firebaseio.com",
-  projectId: "notonlylanguage",
-  storageBucket: "notonlylanguage.appspot.com",
-  messagingSenderId: "532066142854"
-};
-firebase.initializeApp(config);
+
 
 // Prepare Blob support
 const Blob = RNFetchBlob.polyfill.Blob;
@@ -28,9 +23,9 @@ const fs = RNFetchBlob.fs;
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
 window.Blob = Blob;
 
-const storage = firebase.storage();
-const auth = firebase.auth();
-const database = firebase.database();
+const storage = fb.storage();
+const auth = fb.auth();
+const database = fb.database();
 const messagesRef = database.ref('chat/conversation');
 
 const FBSDK = require('react-native-fbsdk');
@@ -168,7 +163,7 @@ export default class FirebaseHeadFirst extends Component {
             } else {
               AccessToken.getCurrentAccessToken().then(
                 (data) => {
-                  const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
+                  const credential = fb.auth.FacebookAuthProvider.credential(data.accessToken);
                   auth.signInWithCredential(credential).then((result) => {
                     alert("success");
                   }, (error) => {

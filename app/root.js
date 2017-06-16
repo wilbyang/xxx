@@ -1,6 +1,6 @@
 import React from "react";
 import { createRootNavigator } from "./navigation";
-import { isSignedIn } from "./auth";
+import { isSignedIn, isSignedInByFirebase } from "./auth";
 
 export default class App extends React.Component {
   constructor(props) {

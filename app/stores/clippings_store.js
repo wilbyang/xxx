@@ -1,5 +1,5 @@
 import {observable, action, useStrict} from 'mobx'
-import api from './api'
+import {api} from './api'
 useStrict(true);
 class ClippingsStore {
   @observable counter = 0;

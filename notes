@@ -4,3 +4,45 @@
         </Button>
 
 rn 对fb的编译需要在/Documents/FacebookSDK路径存在
+
+
+
+export const isSignedIn = () => {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem(USER_KEY)
+      .then(res => {
+        if (res !== null) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch(err => reject(err));
+  });
+};
+
+
+
+export const isSignedInByFirebase = (email, password) => {
+  return new Promise((resolve, reject) => {
+    fb.auth().signInWithEmailAndPassword(email, password).then((result) => {
+      console.log(result);
+      resolve(true);
+    }, (error) => {
+      console.log(error);
+      resolve(false);
+    })
+  });
+};
+
+export const createUserWithEmailAndPassword = (email, password) => {
+  return new Promise((resolve, reject) => {
+    fb.auth().createUserWithEmailAndPassword(email, password).then((result) => {
+      console.log(result);
+      resolve(true);
+    }, (error) => {
+      console.log(error);
+      resolve(false);
+    })
+  });
+};

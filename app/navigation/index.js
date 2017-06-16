@@ -41,7 +41,7 @@ const MyTab = StackNavigator({
   ThirdScreen: { screen: ThirdScreen },
 })
 
-const Nav = TabNavigator({
+export const Nav = TabNavigator({
   Home: { screen: WelcomeTab },
   AVMedia: { screen: AVMediaTab },
   Map: { screen: MyTab },
