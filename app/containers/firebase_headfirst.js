@@ -7,7 +7,7 @@ import t from 'tcomb-form-native';
 import ImagePicker from 'react-native-image-picker';
 import {fb} from '../stores/api';
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
-
+import {onSignOut} from '../auth';
 var Form = t.form.Form;
 // here we are: define your domain model
 var Message = t.struct({
@@ -89,7 +89,6 @@ export default class FirebaseHeadFirst extends Component {
   }
   componentDidMount() {
     messagesRef.limitToLast(120).on('value', (snap) => {
-      console.log("xxhh");
       // get children as an array
       var items = [];
       snap.forEach((child) => {
@@ -157,7 +156,7 @@ export default class FirebaseHeadFirst extends Component {
         backgroundColor="transparent"
         textStyle={{ color: "#bcbec1" }}
         title="Sign Out"
-        onPress={() => this.props.navigation.navigate("SignedOut")}
+        onPress={async () => {await onSignOut();this.props.navigation.navigate("SignedOut")}}
       />
 
       <LoginButton
