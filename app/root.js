@@ -1,26 +1,18 @@
 import React from "react";
 import { createRootNavigator } from "./navigation";
 import { isSignedIn, isSignedInByFirebase } from "./auth";
+import { observer} from 'mobx-react/native';
+import clippingsStore from './stores/clippings_store';
 
+@observer
 export default class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       signedIn: false,
-      checkedSignIn: false
+      checkedSignIn: true
     };
-  }
-
-  componentWillMount() {
-    isSignedIn()
-      .then(res => this.setState({ signedIn: res, checkedSignIn: true }))
-      .catch(err => alert("An error occurred"));
-  }
-  LogoutHandler() {
-    this.setState({
-      signedIn: false
-    });
   }
 
   render() {
@@ -31,7 +23,7 @@ export default class App extends React.Component {
       return null;
     }
 
-    const Layout = createRootNavigator(signedIn);
+    const Layout = createRootNavigator(clippingsStore.user.uid);
     return <Layout />;
   }
 }

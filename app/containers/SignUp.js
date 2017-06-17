@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import { View } from "react-native";
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
 import { onSignIn, createUserWithEmailAndPassword } from "../auth";
-
+import { observer } from 'mobx-react/native';
+@observer
 export default class SecondScreen extends Component {
 
   _createUserWithEmailAndPassword = async ()  => {

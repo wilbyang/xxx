@@ -10,18 +10,19 @@ import SignIn from '../containers/SignIn';
 import SignUp from '../containers/SignUp';
 
 export const SignedOut = StackNavigator({
+  SignIn: {
+    screen: SignIn,
+    navigationOptions: {
+      title: "Sign In"
+    }
+  },
   SignUp: {
     screen: SignUp,
     navigationOptions: {
       title: "Sign Up"
     }
   },
-  SignIn: {
-    screen: SignIn,
-    navigationOptions: {
-      title: "Sign In"
-    }
-  }
+
 });
 
 const WelcomeTab = StackNavigator({

@@ -1,8 +1,12 @@
 import React, {Component} from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
 import { onSignIn, signedInByFirebase } from "../auth";
+import { observer } from 'mobx-react/native';
+import clippingsStore from '../stores/clippings_store';
 
+
+@observer
 export default class FirebaseHeadFirst extends Component {
   render() {
     return (
@@ -18,10 +22,12 @@ export default class FirebaseHeadFirst extends Component {
             backgroundColor="#03A9F4"
             title="SIGN IN"
             onPress={() => {
-              signedInByFirebase(this.state.email, this.state.pwd).then(() => this.props.navigation.navigate("SignedIn"));
+              clippingsStore.signInWithEmailAndPassword("yang.wilby@gmail.com", "yangbo");
             }}
           />
+
         </Card>
+        <Text>{clippingsStore.user.uid}</Text>
       </View>
     );
   }

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import t from 'tcomb-form-native';
 import ImagePicker from 'react-native-image-picker';
 import {fb} from '../stores/api';
+import { observer } from 'mobx-react/native';
 import { Card, Button, FormLabel, FormInput } from "react-native-elements";
 import {onSignOut} from '../auth';
 var Form = t.form.Form;
@@ -68,6 +69,9 @@ const uploadImage = (response) => {
       })
   })
 }
+
+import clippingsStore from '../stores/clippings_store';
+@observer
 export default class FirebaseHeadFirst extends Component {
   static navigationOptions = {
     title: 'Firebase',
@@ -156,7 +160,7 @@ export default class FirebaseHeadFirst extends Component {
         backgroundColor="transparent"
         textStyle={{ color: "#bcbec1" }}
         title="Sign Out"
-        onPress={async () => {await onSignOut();this.props.navigation.navigate("SignedOut")}}
+        onPress={() => clippingsStore.signOut()}
       />
 
       <LoginButton
