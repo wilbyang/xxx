@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, View, StyleSheet, ListView, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, ListView, TouchableOpacity,RefreshControl } from 'react-native';
 import Button from 'react-native-button';
 import { observer } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,7 +11,7 @@ I18n.fallbacks = true
 
 I18n.translations = {
   en: {
-    title: '我的摘抄'
+    title: '摘抄'
   },
   fr: {
     title: 'Bonjour!'
@@ -19,13 +19,19 @@ I18n.translations = {
 }
 @observer
 export default class CounterScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing:false
+    };
+  }
   componentDidMount() {
     clippingsStore.getFromRemote();
   }
   static navigationOptions = {
     title: I18n.t('title'),
     tabBarIcon: ({tintColor}) => (
-      <Icon name='user' color={tintColor} size={24}/>
+      <Icon name='plug' color={tintColor} size={24}/>
     )
   };
   ds = new ListView.DataSource({
@@ -37,7 +43,12 @@ export default class CounterScreen extends Component {
     return (
       <View style={[styles.container, ApplicationStyles.container]}>
 
-        <ListView
+        <ListView refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={() => clippingsStore.getFromRemote()}
+          />
+        }
           enableEmptySections={true}
           automaticallyAdjustContentInsets={true}
           initialListSize={1}

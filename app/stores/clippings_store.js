@@ -6,10 +6,20 @@ class ClippingsStore {
   @observable remoteCounter = 0;
   @observable clippings = [];
   @observable user = {};
-  @observable errorMsg = {};
+  @observable errorMsg = "";
 
   constructor() {
+    fb.auth().onAuthStateChanged(action('user status monitoring', (user)=> {
+        if (user) {
+          this.user = user;
+        } else {
+          this.user = {};
+        }
+      })
+    );
   }
+
+
 
   @action increment() {
     this.counter++;
@@ -31,29 +41,26 @@ class ClippingsStore {
         if(r.ok) {
           this.clippings = r.data;
         }
-        else
+        else {
           this.remoteCounter = 'error';
+        }
       }));
   }
   @action signInWithEmailAndPassword(email, password) {
-    fb.auth().signInWithEmailAndPassword(email, password)
-      .then( action('signed in', (r)=> {
-        let {email, emailVerified, phoneNumber, photoURL, uid, refreshToken} = r;
-        this.user = {email, emailVerified, phoneNumber, photoURL, uid, refreshToken};
-      })).catch(function (error) {
+    fb.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
       this.errorMsg = error.message;
-      alert(error.message)
+      //alert(error.message)
     });
   }
   @action signOut() {
-    fb.auth().signOut()
-      .then( action('signed out', (r)=> {
-        this.user = {};
-      })).catch(function (error) {
+    fb.auth().signOut().catch(function (error) {
       this.errorMsg = error.message;
-      alert(error.message)
+      //alert(error.message)
     });
   }
+
+
+
 }
 
 const clippingsStore = new ClippingsStore;

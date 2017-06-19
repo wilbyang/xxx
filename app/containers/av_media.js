@@ -1,40 +1,47 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet,Platform } from 'react-native'
-import Button from 'react-native-button'
-import { observer } from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Video from 'react-native-video'
+import React, { Component } from 'react';
+import { Text, View, StyleSheet, Platform, ListView } from 'react-native';
+import Button from 'react-native-button';
+import { observer } from 'mobx-react/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Video from 'react-native-video';
 import { Player } from 'react-native-audio-streaming';
-
+import ArtistListItem from './artist_list_item'
+import {Artists} from '../stores/api'
 import ApplicationStyles from '../styles'
 
 
 @observer
 export default class AVMedia extends Component {
   static navigationOptions = {
-    title: '多媒体',
+    title: '聆听',
     tabBarIcon: ({tintColor}) => (
       <Icon name='user' color={tintColor} size={24}/>
     )
   };
 
+  constructor(props) {
+    super(props);
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows( Artists ),
+    }
+  }
   render() {
     return (
       <View style={[styles.container, ApplicationStyles.container]}>
-        <Player url={"http://lacavewebradio.chickenkiller.com:8000/stream.mp3"} />
-        <Button onPress={()=>console.log("xx")} >
-          To ThirdScreen
-        </Button>
+
+        <ListView removeClippedSubviews={false}
+          dataSource={this.state.dataSource}
+          renderRow={ ( artist ) => <ArtistListItem artist={ artist } /> }/>
+
       </View>
     )
   }
+
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   backgroundVideo:{
     width:200,
