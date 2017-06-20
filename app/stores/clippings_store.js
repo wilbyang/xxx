@@ -7,6 +7,7 @@ class ClippingsStore {
   @observable clippings = [];
   @observable user = {};
   @observable errorMsg = "";
+  @observable loading = false;
 
   constructor() {
     fb.auth().onAuthStateChanged(action('user status monitoring', (user)=> {
@@ -36,10 +37,12 @@ class ClippingsStore {
   }
 
   @action getFromRemote() {
+    this.loading = true;
     api.get('/story.json')
       .then( action('request my clippings', (r)=> {
         if(r.ok) {
           this.clippings = r.data;
+          this.loading = false;
         }
         else {
           this.remoteCounter = 'error';
