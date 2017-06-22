@@ -5,7 +5,7 @@ export const api = create({
   baseURL: config.apiBaseURL,
   timeout: 10000
 });
-export const fb = firebase.initializeApp(config.firebaseConfig);
+export const firebaseApp = firebase.initializeApp(config.firebaseConfig);
 export const Artists = [
   {
     name: "Breakbot",

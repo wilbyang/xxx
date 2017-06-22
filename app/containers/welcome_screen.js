@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Modal, TouchableHighlight } from 'react-native'
 import Button from 'react-native-button'
 import { observer } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -16,31 +16,44 @@ export default class WelcomeScreen extends Component {
     )
   };
 
+  state = {
+    modalVisible: false,
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
   render() {
     return (
-      <View style={[styles.container, ApplicationStyles.container]}>
-        <Icon style={styles.welcome} name="home" size={30} />
-        <Text style={styles.text} >
-          Welcome to Mobx React Native Template
-        </Text>
-        <Text style={styles.text} >
-          Now counter is <Text style={styles.textRed}>{counterStore.counter}</Text>
-        </Text>
-        <Text style={styles.text} >
-          Now remote counter is {counterStore.remoteCounter}
-        </Text>
-        <Button style={ApplicationStyles.button} onPress={ ()=> counterStore.getFromRemote() }>
-          Click to get api data
-        </Button>
-        <Button style={ApplicationStyles.button} onPress={ ()=> this.props.navigation.navigate('SecondScreen') }>
-          Click to second screen
-        </Button>
+      <View style={{marginTop: 22}}>
+        <Modal
+          animationType={"slide"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+        >
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
 
-        <Button style={ApplicationStyles.button} onPress={ ()=> this.props.navigation.navigate('CounterScreen') }>
-          Click to counter screen
-        </Button>
+              <TouchableHighlight onPress={() => {
+                this.setModalVisible(!this.state.modalVisible)
+              }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+
+            </View>
+          </View>
+        </Modal>
+
+        <TouchableHighlight onPress={() => {
+          this.setModalVisible(true)
+        }}>
+          <Text>Show Modal</Text>
+        </TouchableHighlight>
+
       </View>
-    )
+    );
   }
 }
 

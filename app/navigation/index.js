@@ -1,14 +1,14 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
-;
 import WelcomeScreen from '../containers/welcome_screen';
 import SecondScreen from '../containers/second_screen';
 import ClippingsScreen from '../containers/clippings_screen';
 import AVMedia from '../containers/av_media';
-import FirebaseHeadFirst from '../containers/firebase_headfirst';
+import ChatScreen from '../containers/chat_screen';
 import ThirdScreen from '../containers/third_screen';
-import FaHen from '../containers/nb_publish';
+import FaHen from '../containers/fahen_screen';
 import SignIn from '../containers/SignIn';
 import SignUp from '../containers/SignUp';
+import Player from '../components/player';
 
 export const SignedOut = StackNavigator({
   SignIn: {
@@ -23,32 +23,32 @@ export const SignedOut = StackNavigator({
       title: "Sign Up"
     }
   },
-
 });
 
 const WelcomeTab = StackNavigator({
   ClippingsScreen: { screen: ClippingsScreen },
-  WelcomeScreen: { screen: WelcomeScreen },
+
   SecondScreen: { screen: SecondScreen },
 });
 
 const AVMediaTab = StackNavigator({
   AVMedia: { screen: AVMedia },
-  ThirdScreen: { screen: ThirdScreen },
+  PlayerScreen: { screen: Player },
 })
 const MyTab = StackNavigator({
-  FirebaseHeadFirst: { screen: FirebaseHeadFirst },
+  ChatScreen: { screen: ChatScreen },
   ThirdScreen: { screen: ThirdScreen },
 })
 const FahenTab = StackNavigator({
-  FirebaseHeadFirst: { screen: FaHen },
+  ChatScreen: { screen: FaHen },
+  WelcomeScreen: { screen: WelcomeScreen },
 })
 
 export const Nav = TabNavigator({
   Home: { screen: WelcomeTab },
   AVMedia: { screen: AVMediaTab },
   Map: { screen: MyTab },
-  FaHen: { screen: FaHen },
+  FaHen: { screen: FahenTab },
 });
 
 export const createRootNavigator = (signedIn = false) => {

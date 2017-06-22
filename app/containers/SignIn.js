@@ -41,7 +41,7 @@ export default class FirebaseHeadFirst extends Component {
                 } else {
                   AccessToken.getCurrentAccessToken().then(
                     (data) => {
-                      const credential = fb.auth.FacebookAuthProvider.credential(data.accessToken);
+                      const credential = firebaseApp.auth.FacebookAuthProvider.credential(data.accessToken);
                       auth.signInWithCredential(credential).then((result) => {
                         alert("success");
                       }, (error) => {

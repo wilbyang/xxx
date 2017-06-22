@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Text, View, StyleSheet, ListView, TouchableOpacity,RefreshControl } from 'react-native';
+import { Text, View, StyleSheet, ListView, TouchableHighlight, RefreshControl, FlatList } from 'react-native';
 import Button from 'react-native-button';
 import { observer } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -26,7 +26,7 @@ export default class CounterScreen extends Component {
     };
   }
   componentDidMount() {
-    clippingsStore.getFromRemote();
+    clippingsStore.getClippings();
   }
   static navigationOptions = {
     title: I18n.t('title'),
@@ -34,41 +34,42 @@ export default class CounterScreen extends Component {
       <Icon name='plug' color={tintColor} size={24}/>
     )
   };
-  ds = new ListView.DataSource({
-    rowHasChanged: (r1, r2) => {
-      return r1 !== r2
-    }
-  });
+
   render() {
     return (
       <View style={[styles.container, ApplicationStyles.container]}>
-
-        <ListView refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={() => clippingsStore.getFromRemote()}
-          />
-        }
-          enableEmptySections={true}
-          automaticallyAdjustContentInsets={true}
-          initialListSize={1}
-          dataSource={this.ds.cloneWithRows(clippingsStore.clippings.slice())}
-          renderRow={this._renderRow}
-          onEndReachedThreshold={1}
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={clippingsStore.loading}
+              onRefresh={() => clippingsStore.getClippings()}
+            />
+          }
+          keyExtractor={this._keyExtractor}
+          data={clippingsStore.clippings}
+          renderItem={({item}) => this._renderRow(item)}
         />
-
       </View>
     )
   }
 
+  _keyExtractor = (item, index) => item.Date;
+
+  _bookmark = (data) => {
+
+  }
   _renderRow = (data) => {
     return (
-      <TouchableOpacity>
+      <TouchableHighlight underlayColor="gray" onLongPress={()=>console.log("xxgg")}>
         <View style={{padding:12}}>
           <Text style={styles.textHead}>{data.Title }</Text>
           <Text style={styles.textContent}>{data.Content}</Text>
+          <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+            <Icon name='bookmark'  size={16}/>
+            <Icon name='thumbs-up' size={16}/>
+          </View>
         </View>
-      </TouchableOpacity>
+      </TouchableHighlight>
     )
   }
 

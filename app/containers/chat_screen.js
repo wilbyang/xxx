@@ -5,7 +5,7 @@ import { Text, View, StyleSheet, TouchableOpacity, ListView, Platform } from 're
 import Icon from 'react-native-vector-icons/FontAwesome';
 import t from 'tcomb-form-native';
 import {GiftedChat} from 'react-native-gifted-chat';
-import {fb} from '../stores/api';
+import {firebaseApp} from '../stores/api';
 import { observer } from 'mobx-react/native';
 import Firebase from 'firebase';
 
@@ -15,8 +15,7 @@ var Message = t.struct({
   msg: t.maybe(t.String),  // an optional string
 });
 var options = {};
-const messagesRef = fb.database().ref('chat/conversation');
-
+const messagesRef = firebaseApp.database().ref('user/chat');
 import clippingsStore from '../stores/clippings_store';
 
 @observer

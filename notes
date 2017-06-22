@@ -118,3 +118,30 @@ export const createUserWithEmailAndPassword = (email, password) => {
         messages: GiftedChat.append(previousState.messages, messages),
       };
     });
+
+
+    <ListView refreshControl={
+              <RefreshControl
+                refreshing={clippingsStore.loading}
+                onRefresh={() => clippingsStore.getFromRemote()}
+              />
+            }
+              enableEmptySections={true}
+              automaticallyAdjustContentInsets={true}
+              initialListSize={1}
+              dataSource={this.ds.cloneWithRows(clippingsStore.clippings.slice())}
+              renderRow={this._renderRow}
+              onEndReachedThreshold={1}
+            />
+
+    ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => {
+          return r1 !== r2
+        }
+      });
+
+
+
+    <View style={ styles.headerClose }>
+              <Icon onPress={ Actions.pop } name="chevron-down" size={15} color="#fff" />
+            </View>

@@ -1,5 +1,5 @@
 import { AsyncStorage } from "react-native";
-import {fb} from "./stores/api";
+import {firebaseApp} from "./stores/api";
 export const USER_KEY = "auth-demo-key";
 export const USER_UID_KEY = "auth-uid";
 
@@ -19,7 +19,7 @@ export const isSignedIn = async () => {
   return result;
 }
 export const signedInByFirebase = async (email, password) => {
-  let result = await fb.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+  let result = await firebaseApp.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
     alert(error.message)
   });
   let setStorageResult = await AsyncStorage.setItem(USER_UID_KEY, result.uid);
@@ -27,6 +27,6 @@ export const signedInByFirebase = async (email, password) => {
 };
 
 export const createUserWithEmailAndPassword = async (email, password) => {
-  let result = await fb.auth().createUserWithEmailAndPassword(email, password);
+  let result = await firebaseApp.auth().createUserWithEmailAndPassword(email, password);
   return result.uid;
 };
