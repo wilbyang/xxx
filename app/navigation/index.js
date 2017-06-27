@@ -49,7 +49,7 @@ export const Nav = TabNavigator({
   AVMedia: { screen: AVMediaTab },
   Map: { screen: MyTab },
   FaHen: { screen: FahenTab },
-});
+}, {lazy:true});
 
 export const createRootNavigator = (signedIn = false) => {
   return StackNavigator(

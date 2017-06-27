@@ -13,7 +13,16 @@ var ToDo = t.struct({
   content: t.String,              // a required string
   endDate: t.Date,  // an optional string
 });
-var options = {};
+var options = {
+  auto: 'placeholders',
+  fields: {
+    content: {
+      placeholder: 'Opmerking',
+      multiline: true,
+      numberOfLines: 40
+    }
+  }
+};
 
 
 @observer
@@ -30,10 +39,10 @@ export default class FaHen extends Component {
 
 
       <View style={[styles.container, ApplicationStyles.container]}>
-        <Text style={styles.text} >
+        <Text style={styles.text}>
           Now remote counter is {counterStore.remoteCounter}
         </Text>
-        <Form
+        <Form style={{height:400}}
           ref="form"
           type={ToDo}
           options={options}
@@ -50,6 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    height:600
   },
   welcome: {
     textAlign: 'center',

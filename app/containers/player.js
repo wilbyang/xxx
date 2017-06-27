@@ -18,6 +18,12 @@ const window = Dimensions.get('window');
 import {Artists} from '../stores/api'
 @observer
 export default class Player extends Component {
+  static navigationOptions = {
+    title: '聆听',
+    tabBarIcon: ({tintColor}) => (
+      <Icon name='user' color={tintColor} size={24}/>
+    )
+  };
   constructor(props){
     super(props);
     this.state = {

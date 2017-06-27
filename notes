@@ -142,6 +142,9 @@ export const createUserWithEmailAndPassword = (email, password) => {
 
 
 
+缺少真实关系，没有互动
+
+
     <View style={ styles.headerClose }>
               <Icon onPress={ Actions.pop } name="chevron-down" size={15} color="#fff" />
             </View>
@@ -165,3 +168,23 @@ export const createUserWithEmailAndPassword = (email, password) => {
 
 
     哲哥，有没有啥hash，可以保证yangboxuzhe和xuzheyangbo的hash是一样的
+
+
+
+
+
+
+        user/{yangbo}/topic/{love, affair}
+
+            {txt:已经结婚的来聊聊感情, image:'', entity_id:"fdajkfdj1"}
+
+
+        messages/{fdajkfdj1[conversationId, postId]}
+            {txt:"花式约炮啊", user:"user1"}
+            {txt:"被你看穿啦", user:"user1", to:""}
+
+        user/{yangbo}/place/{beijing, shanghai}
+            {txt:学校的美女太少啦, image:'', entity_id:"fdajkfdj2"}
+
+        user/{yangbo}/posts
+
