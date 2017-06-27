@@ -19,7 +19,7 @@ const messagesRef = firebaseApp.database().ref('user/chat');
 import clippingsStore from '../stores/clippings_store';
 
 @observer
-export default class FirebaseHeadFirst extends Component {
+export default class Chat extends Component {
   static navigationOptions = {
     title: '聊天',
     tabBarIcon: ({tintColor}) => (
@@ -29,9 +29,6 @@ export default class FirebaseHeadFirst extends Component {
   constructor() {
     super();
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
       messages: []
     };
   }
@@ -50,7 +47,7 @@ export default class FirebaseHeadFirst extends Component {
         return {
           messages: GiftedChat.append(previousState.messages, {
             _id:previousState.messages.length + 1,
-            text: snap.val().title,
+            text: snap.val().text,
             createdAt: new Date(snap.val().createdAt),
             user: snap.val().user,
           }),

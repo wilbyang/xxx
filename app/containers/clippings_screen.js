@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Text, View, StyleSheet, ListView, TouchableHighlight, RefreshControl, FlatList } from 'react-native';
-import Button from 'react-native-button';
 import { observer } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ApplicationStyles from '../styles';
-
 import clippingsStore from '../stores/clippings_store';
-import I18n from 'react-native-i18n';
-I18n.fallbacks = true
+import {firebaseApp} from '../stores/api'
+import ClippingIteminList from './clipping_listitem'
 
+import I18n from 'react-native-i18n';
+import {Motion, spring} from 'react-motion';
+I18n.fallbacks = true
 I18n.translations = {
   en: {
     title: '摘抄'
@@ -18,7 +19,7 @@ I18n.translations = {
   }
 }
 @observer
-export default class CounterScreen extends Component {
+export default class ClippingScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,34 +48,26 @@ export default class CounterScreen extends Component {
           }
           keyExtractor={this._keyExtractor}
           data={clippingsStore.clippings}
-          renderItem={({item}) => this._renderRow(item)}
+          renderItem={({item, index}) => this._renderRow(item, index)}
         />
+
+        <Motion defaultStyle={{x: 0}} style={{x: spring(10)}}>
+          {value => <Text>{value.x}</Text>}
+        </Motion>
       </View>
     )
   }
 
   _keyExtractor = (item, index) => item.Date;
 
-  _bookmark = (data) => {
-
+  _bookmark = () => {
+    let ref = 'user/' + clippingsStore.user.uid + '/bookmarks'
+    //firebaseApp.database().ref(ref).push({cid: "xxhh"});
   }
-  _renderRow = (data) => {
+  _renderRow = (item, index) => {
     return (
-      <TouchableHighlight underlayColor="gray" onLongPress={()=>console.log("xxgg")}>
-        <View style={{padding:12}}>
-          <Text style={styles.textHead}>{data.Title }</Text>
-          <Text style={styles.textContent}>{data.Content}</Text>
-          <View style={{flexDirection:"row", justifyContent:"space-around"}}>
-            <Icon name='bookmark'  size={16}/>
-            <Icon name='thumbs-up' size={16}/>
-          </View>
-        </View>
-      </TouchableHighlight>
+      <ClippingIteminList item = {item} index = {index}/>
     )
-  }
-
-  _onEndReached = () => {
-
   }
 }
 

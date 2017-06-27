@@ -9,7 +9,7 @@ export const firebaseApp = firebase.initializeApp(config.firebaseConfig);
 export const Artists = [
   {
     name: "Breakbot",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-29-06/Screen-Shot-2016-03-01-15-29-06.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-29-06/Screen-Shot-2016-03-01-15-29-06.png",
     songs: [
       {
         title: "Star Tripper",
@@ -45,7 +45,7 @@ export const Artists = [
   },
   {
     name: "The Beatles",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-20-40/Screen-Shot-2016-03-01-15-20-40.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-20-40/Screen-Shot-2016-03-01-15-20-40.png",
     songs: [
       {
         title: "Something",
@@ -86,7 +86,7 @@ export const Artists = [
   },
   {
     name: "Daft Punk",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-25-13/Screen-Shot-2016-03-01-15-25-13.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-25-13/Screen-Shot-2016-03-01-15-25-13.png",
     songs: [
       {
         title: "Giorgio",
@@ -122,7 +122,7 @@ export const Artists = [
   },
   {
     name: "Pink Floyd",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-23-47/Screen-Shot-2016-03-01-15-23-47.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-23-47/Screen-Shot-2016-03-01-15-23-47.png",
     songs: [
       {
         title: "Marooned",
@@ -148,7 +148,7 @@ export const Artists = [
   },
   {
     name: "Andy Allo",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-31-35/Screen-Shot-2016-03-01-15-31-35.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-31-35/Screen-Shot-2016-03-01-15-31-35.png",
     songs: [
       {
         title: "Fly Away (feat. The Tones)",
@@ -159,7 +159,7 @@ export const Artists = [
   },
   {
     name: "Jamiroquai",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-33-17/Screen-Shot-2016-03-01-15-33-17.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-33-17/Screen-Shot-2016-03-01-15-33-17.png",
     songs: [
       {
         title: "Seven Days in Sunny June",
@@ -175,7 +175,7 @@ export const Artists = [
   },
   {
     name: "Illya Kuryaki & The Valderramas",
-    background: "http://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-35-26/Screen-Shot-2016-03-01-15-35-26.png",
+    background: "https://jgnatch-dropshare.s3.amazonaws.com/Screen-Shot-2016-03-01-15-35-26/Screen-Shot-2016-03-01-15-35-26.png",
     songs: [
       {
         title: "Funky Futurista",

@@ -1,6 +1,6 @@
 import {observable, action, useStrict} from 'mobx'
 import {api, firebaseApp} from './api'
-
+import ClippingListItem from './clipping_listitem'
 
 
 useStrict(true);
@@ -35,8 +35,6 @@ class ClippingsStore {
       })
     );
   }
-
-
 
   @action facebookMe() {
     const infoRequest = new GraphRequest(
@@ -77,7 +75,13 @@ class ClippingsStore {
     api.get('/story.json')
       .then( action('request my clippings', (r)=> {
         if(r.ok) {
-          this.clippings = r.data;
+          this.clippings = r.data.map((item) =>{
+            let i = new ClippingListItem();
+            i.Content = item.Content;
+            i.expanded = false;
+            i.Date = item.Date;
+            return i;
+          });
           this.loading = false;
         }
         else {
@@ -97,9 +101,6 @@ class ClippingsStore {
       //alert(error.message)
     });
   }
-
-
-
 }
 
 const clippingsStore = new ClippingsStore;

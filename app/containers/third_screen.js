@@ -1,25 +1,72 @@
-import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import Button from 'react-native-button'
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Text,
+  View
+} from 'react-native';
 
-import ApplicationStyles from '../styles'
+export default class FlatListDemo extends Component {
+  state = {
+    data: [
+      {
+        key: "z",
+        value: "China",
+        isExpand: false
+      }, {
+        key: "b",
+        value: "Beijing",
+        isExpand: false
+      }, {
+        key: "c",
+        value: "Chengdu",
+        isExpand: false
+      }, {
+        key: "x",
+        value: "Xiaan",
+        isExpand: false
+      }
+    ]
+  }
 
-export default class ThirdScreen extends Component {
-  static navigationOptions = {
-    tabBarVisible: false,
-    title: 'Third Screen',
-  };
+  updateData = (item, index) => {
+    const { data } = this.state
+
+    const dataCopy = data.slice() // 浅拷贝
+    dataCopy.forEach((item, indexInData) => item.isExpand = index === indexInData)
+
+    this.setState({
+      data: dataCopy
+    })
+  }
 
   render() {
     return (
-      <View style={[styles.container, ApplicationStyles.container]}>
-        <Text style={styles.welcome}>
-          Third Screen Container
-        </Text>
-        <Button style={styles.instructions} onPress={ ()=> this.props.navigation.goBack() }>
-          Back to Prev Screen
-        </Button>
+      <View style={styles.container}>
+        <FlatList
+          style={{flex: 1}}
+          data={this.state.data}
+          renderItem={this.renderItem}
+        />
       </View>
+    )
+  }
+
+  renderItem = ({item, index}) => {
+    return (
+      <TouchableOpacity
+        onLongPress={() => this.updateData(item, index)}>
+        <View style={styles.item}>
+          <Text>{item.value}</Text>
+        </View>
+        {item.isExpand &&
+        <View style={[styles.item, {backgroundColor: "pink"}]}>
+          <Text>description: {item.value}</Text>
+        </View>
+        }
+      </TouchableOpacity>
     )
   }
 }
@@ -27,11 +74,13 @@ export default class ThirdScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 64,
+    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    textAlign: 'center',
-    margin: 10
-  },
+  item: {
+    height: 45,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: 'center'
+  }
 });

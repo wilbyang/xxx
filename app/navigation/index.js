@@ -2,13 +2,13 @@ import { TabNavigator, StackNavigator } from 'react-navigation';
 import WelcomeScreen from '../containers/welcome_screen';
 import SecondScreen from '../containers/second_screen';
 import ClippingsScreen from '../containers/clippings_screen';
-import AVMedia from '../containers/av_media';
+import AVMedia from '../containers/songs_screen';
 import ChatScreen from '../containers/chat_screen';
 import ThirdScreen from '../containers/third_screen';
 import FaHen from '../containers/fahen_screen';
-import SignIn from '../containers/SignIn';
-import SignUp from '../containers/SignUp';
-import Player from '../components/player';
+import SignIn from '../containers/signin_screen';
+import SignUp from '../containers/signup_screen';
+import Player from '../containers/player';
 
 export const SignedOut = StackNavigator({
   SignIn: {

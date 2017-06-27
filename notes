@@ -145,3 +145,23 @@ export const createUserWithEmailAndPassword = (email, password) => {
     <View style={ styles.headerClose }>
               <Icon onPress={ Actions.pop } name="chevron-down" size={15} color="#fff" />
             </View>
+
+
+
+            <View style={{flexDirection:"row", justifyContent:"space-around"}}>
+                        <Icon name='bookmark'  size={16}/>
+                        <Icon name='thumbs-up' size={16}/>
+                      </View>
+
+    yang.wilby@gmail.com/
+        wil.2@3.com
+            你好
+            你好
+    1
+        from: 2
+        msg: I love you
+
+
+
+
+    哲哥，有没有啥hash，可以保证yangboxuzhe和xuzheyangbo的hash是一样的
