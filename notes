@@ -170,21 +170,24 @@ export const createUserWithEmailAndPassword = (email, password) => {
     哲哥，有没有啥hash，可以保证yangboxuzhe和xuzheyangbo的hash是一样的
 
 
+    {txt:已经结婚的来聊聊感情, image:'', entity_id:"fdajkfdj1", place:"beijing", user:"yangbo"}
 
 
 
+        topic/{love, affair}
+            {txt:已经结婚的来聊聊感情, image:'', user:"yanuseridgbo", topic:"love"}
+        place/{beijing, shenzhen}
+            {txt:已经结婚的来聊聊感情, image:'', user:"yanuseridgbo", place:"beijing"}
+        company/{alibaba, tencent}
+            {txt:已经结婚的来聊聊感情, image:'', user:"yanuseridgbo", place:"alibaba"}
 
-        user/{yangbo}/topic/{love, affair}
-
-            {txt:已经结婚的来聊聊感情, image:'', entity_id:"fdajkfdj1"}
-
-
-        messages/{fdajkfdj1[conversationId, postId]}
-            {txt:"花式约炮啊", user:"user1"}
-            {txt:"被你看穿啦", user:"user1", to:""}
-
-        user/{yangbo}/place/{beijing, shanghai}
-            {txt:学校的美女太少啦, image:'', entity_id:"fdajkfdj2"}
 
         user/{yangbo}/posts
+            [fdajkfdj1]
+        user/{yangbo}/profile
+            {focus:''}
+
+        reply/{fdajkfdj1[conversationId, postId]}
+            {txt:"花式约炮啊", user:"user1"}
+            {txt:"被你看穿啦", user:"user1", to:""}
 

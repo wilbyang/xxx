@@ -1,6 +1,7 @@
 import {observable, action, useStrict} from 'mobx'
 import {api, firebaseApp} from './api'
-import ClippingListItem from './clipping_listitem'
+import ClippingListItem from './clipping'
+import Secret from './secret'
 
 
 useStrict(true);
@@ -16,26 +17,63 @@ const {
 
 
 class ClippingsStore {
-  @observable counter = 0;
-  @observable remoteCounter = 0;
-  @observable clippings = [];
-  @observable user = {};
-  @observable errorMsg = "";
-  @observable loading = false;
-  @observable artistIndex = 0;
-
+  @observable counter = 0
+  @observable remoteCounter = 0
+  @observable clippings = []
+  @observable secrets = []
+  @observable currentUser = {}
+  @observable errorMsg = ""
+  @observable loading = false
+  @observable artistIndex = 0
 
   constructor() {
-    firebaseApp.auth().onAuthStateChanged(action('user status monitoring', (user)=> {
+    firebaseApp.auth().onAuthStateChanged(action('onAuthStateChanged', (user)=> {
         if (user) {
-          this.user = user;
+          let {email, emailVerified, phoneNumber, photoURL, uid, refreshToken} = user;
+          this.currentUser = {email, emailVerified, phoneNumber, photoURL, uid, refreshToken};
         } else {
-          this.user = {};
+          this.currentUser = {}
         }
       })
-    );
+    )
   }
 
+  @action async getFreshSecrets(timestamp) {
+    this.loading = true
+    let userFocus = {}
+
+    let userRef = firebaseApp.database().ref(`user/${this.currentUser.uid}`)
+    await userRef.once("value").then(action("getUserProfile", (snapshot) => {
+      userFocus = snapshot.val().focus
+    }))
+    let that = this
+    let promises = []
+    Object.keys(userFocus).forEach(function (item) {
+      userFocus[item].forEach(function (i) {
+        let path = `secret/${item}/${i}`;
+        let secretsRef = firebaseApp.database().ref(path);
+        promises.push(secretsRef.orderByChild('date').startAt(timestamp).once("value", action(path, (snapshot) => {
+          let commingSecrets = []
+          snapshot.forEach(function(childSnapshot) {
+            let {txt, user, image, date} = childSnapshot.val()
+            let key = childSnapshot.key
+            commingSecrets.push({txt, user, image, key, date})
+          })
+          that.secrets = that.secrets.slice().concat(commingSecrets)
+        })))
+      })
+    })
+    Promise.all(promises).then(action("loadFinished",  (t) => {
+      this.loading = false
+    })).catch(err => {
+      console.log(err)
+    })
+  }
+
+  @action postSecret(topic) {
+    let secretsRef = firebaseApp.database().ref("topic/".concat(topic));
+    secretsRef.push({txt:"已经结婚的来聊聊感情", image:'', user:clippingsStore.currentUser.uid});
+  }
   @action facebookMe() {
     const infoRequest = new GraphRequest(
       '/me',
@@ -73,36 +111,36 @@ class ClippingsStore {
   @action getClippings() {
     this.loading = true;
     api.get('/story.json')
-      .then( action('request my clippings', (r)=> {
+      .then( action('request my clippings', (r) => {
         if(r.ok) {
-          this.clippings = r.data.map((item) =>{
-            let i = new ClippingListItem();
-            i.Content = item.Content;
-            i.expanded = false;
-            i.Date = item.Date;
-            return i;
+          this.clippings = r.data.map((item) => {
+            let i = new ClippingListItem()
+            i.Content = item.Content
+            i.expanded = false
+            i.Date = item.Date
+            return i
           });
-          this.loading = false;
+          this.loading = false
         }
         else {
-          this.remoteCounter = 'error';
+          this.remoteCounter = 'error'
         }
       }));
   }
   @action signInWithEmailAndPassword(email, password) {
     firebaseApp.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-      this.errorMsg = error.message;
+      this.errorMsg = error.message
       //alert(error.message)
     });
   }
   @action signOut() {
     firebaseApp.auth().signOut().catch(function (error) {
-      this.errorMsg = error.message;
+      this.errorMsg = error.message
       //alert(error.message)
     });
   }
 }
 
-const clippingsStore = new ClippingsStore;
+const clippingsStore = new ClippingsStore
 
-export default clippingsStore;
+export default clippingsStore

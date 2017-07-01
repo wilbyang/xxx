@@ -63,8 +63,8 @@ export default class Chat extends Component {
         messages={this.state.messages}
         onSend={this.onSend}
         user={{
-          name:clippingsStore.user.email,
-          _id: clippingsStore.user.uid,
+          name:clippingsStore.currentUser.email,
+          _id: clippingsStore.currentUser.uid,
         }} />
     );
   }

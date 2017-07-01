@@ -23,7 +23,7 @@ export default class App extends React.Component {
       return null;
     }
 
-    const Layout = createRootNavigator(clippingsStore.user.uid);
+    const Layout = createRootNavigator(clippingsStore.currentUser.uid);
     return <Layout />;
   }
 }

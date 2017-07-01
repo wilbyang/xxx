@@ -1,10 +1,10 @@
 import {observable, action, useStrict} from 'mobx'
 useStrict(true);
-export default class ClippingListItem {
-  @observable
+export default class Clipping {
+
   content;
-  @observable
-  expanded;
+
+  @observable expanded;
 
   @action
   toggleOperation() {
