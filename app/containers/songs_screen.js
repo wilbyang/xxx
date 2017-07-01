@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, Platform, ListView } from 'react-native';
 import Button from 'react-native-button';
 import { observer } from 'mobx-react/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Video from 'react-native-video';
 import { Player } from 'react-native-audio-streaming';
 import ArtistListItem from './artist_list_item';
@@ -13,9 +13,9 @@ import ApplicationStyles from '../styles';
 @observer
 export default class AVMedia extends Component {
   static navigationOptions = {
-    title: '聆听',
+    title: '发现',
     tabBarIcon: ({tintColor}) => (
-      <Icon name='user' color={tintColor} size={24}/>
+      <Icon name='md-navigate' color={tintColor} size={24}/>
     )
   };
 

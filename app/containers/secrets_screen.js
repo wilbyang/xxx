@@ -2,26 +2,20 @@
  * Created by wilbyang on 2017-06-29.
  */
 import React, {Component} from 'react';
-import {View, RefreshControl, FlatList, Text, TouchableOpacity} from 'react-native'
+import {View, RefreshControl, FlatList, Text, TouchableOpacity, ActivityIndicator} from 'react-native'
 import clippingsStore from '../stores/clippings_store';
-import {firebaseApp} from '../stores/api';
 var _ = require('lodash');
 import moment from 'moment';
 import {Avatar} from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { observer } from 'mobx-react/native';
 
 @observer
 class SecretsScreen extends Component {
-
-  constructor(props){
-    super(props);
-  }
-
   static navigationOptions = ({navigation}) => ({
-    title: 'Home',
+    title: '秘密',
     tabBarIcon: ({tintColor}) => (
-      <Icon name='plug' color={tintColor} size={24}/>
+      <Icon name='md-home' color={tintColor} size={24}/>
     ),
     headerLeft: (
       <TouchableOpacity
@@ -36,7 +30,7 @@ class SecretsScreen extends Component {
       <View style={{
         height: "100%",
         justifyContent: "center"}}>
-        <Text style={{fontSize: 15}}>匿名</Text>
+        <Text style={{fontSize: 18}}>无秘</Text>
       </View>
     ),
     headerRight: (
@@ -46,7 +40,7 @@ class SecretsScreen extends Component {
           height: 30,
           paddingHorizontal: 15,
           justifyContent: "center"}}>
-        <Text style={{color: "gray", fontSize: 15}}>+</Text>
+        <Icon name='md-add' color="black" size={32}/>
       </TouchableOpacity>
     )
   })
@@ -100,6 +94,13 @@ class SecretsScreen extends Component {
           data={clippingsStore.secrets.slice()}
           renderItem={({item, index}) => this._renderRow(item, index)}
         />
+        {clippingsStore.loading && (
+          <ActivityIndicator
+            style={{ height: 80 }}
+            color="#C00"
+            size="large"
+          />
+        )}
       </View>
     );
   }

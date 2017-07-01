@@ -5,9 +5,10 @@ import { observer } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ApplicationStyles from '../styles'
 import {firebaseApp} from '../stores/api';
+import Firebase from 'firebase';
 import counterStore from '../stores/clippings_store'
 import t from 'tcomb-form-native';
-import Firebase from 'firebase';
+
 import clippingsStore from '../stores/clippings_store';
 var Form = t.form.Form;
 

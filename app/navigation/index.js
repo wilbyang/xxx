@@ -51,7 +51,7 @@ export const Nav = TabNavigator({
   Home: { screen: SecretsTab },
   AVMedia: { screen: AVMediaTab },
   Map: { screen: MyTab },
-  FaHen: { screen: FahenTab },
+  //FaHen: { screen: FahenTab },
 }, {lazy:true});
 
 export const createRootNavigator = (signedIn = false) => {
