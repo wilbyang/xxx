@@ -5,7 +5,6 @@ import android.app.Application;
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.i18n.reactnativei18n.ReactNativeI18n;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.audioStreaming.ReactNativeAudioStreamingPackage;
@@ -33,7 +32,6 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new MapsPackage(),
             new ReactNativeI18n(),
-            new FBSDKPackage(),
             new ImagePickerPackage(),
             new RNFetchBlobPackage(),
             new ReactNativeAudioStreamingPackage(),

@@ -49,8 +49,6 @@ const FahenTab = StackNavigator({
 
 export const Nav = TabNavigator({
   Home: { screen: SecretsTab },
-  AVMedia: { screen: AVMediaTab },
-  Map: { screen: MyTab },
   //FaHen: { screen: FahenTab },
 }, {lazy:true});
 
