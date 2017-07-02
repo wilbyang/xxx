@@ -18,13 +18,13 @@ class SecretsScreen extends Component {
       <Icon name='md-home' color={tintColor} size={24}/>
     ),
     headerLeft: (
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{
-          height: "100%",
-          paddingHorizontal: 20,
-          backgroundColor: "green"}}>
-      </TouchableOpacity>
+      <Avatar
+        small
+        rounded
+        title="20"
+        onPress={() => console.log("Works!")}
+        activeOpacity={0.7}
+      />
     ),
     headerTitle: (
       <View style={{
@@ -71,10 +71,8 @@ class SecretsScreen extends Component {
           <Text style={{color:"grey"}}>感情</Text>
           </View>
         </View>
-        <View style={{ flexDirection:"row", marginTop:40, marginBottom:20, }}><Text style={{lineHeight:26, fontSize: 16,}}>{item.txt}</Text></View>
+        <TouchableOpacity style={{ flexDirection:"row", marginTop:40, marginBottom:20, }}><Text style={{lineHeight:26, fontSize: 16,}}>{item.txt}</Text></TouchableOpacity>
         <View style={{ flexDirection:"row"}}><Text style={{color:"grey"}}>{moment(item.date).locale("zh-cn").startOf('hour').fromNow()}</Text></View>
-
-
       </View>
     )
   };
