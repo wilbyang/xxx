@@ -75,7 +75,7 @@ export default class extends Component {
     headerLeft: (
       <TouchableOpacity
         onPress={() => navigation.goBack()}
-        style={{ height: "100%", paddingHorizontal: 20, }}>
+        style={{ height: "100%", paddingHorizontal: 20, paddingTop:10 }}>
         <Icon name='md-close' color="black" size={28}/>
       </TouchableOpacity>
     ),

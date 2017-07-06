@@ -14,12 +14,11 @@ import { observer } from 'mobx-react/native';
 class SecretsScreen extends Component {
   static navigationOptions = ({navigation}) => ({
     title: '秘密',
-    tabBarIcon: ({tintColor}) => (
-      <Icon name='md-home' color={tintColor} size={24}/>
-    ),
+
     headerLeft: (
       <Avatar
-        small
+        width={24}
+        height={24}
         rounded
         title="20"
         onPress={() => console.log("Works!")}
@@ -40,7 +39,7 @@ class SecretsScreen extends Component {
           height: 30,
           paddingHorizontal: 15,
           justifyContent: "center"}}>
-        <Icon name='md-add' color="black" size={32}/>
+        <Icon name='md-add' color="black" size={28}/>
       </TouchableOpacity>
     )
   })

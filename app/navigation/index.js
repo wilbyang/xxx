@@ -11,7 +11,8 @@ import SignIn from '../containers/signin_screen';
 import SignUp from '../containers/signup_screen';
 import Player from '../containers/player';
 import PublishSecretScreen from '../containers/publish_secret_screen'
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import React from 'react';
 export const SignedOut = StackNavigator({
   SignIn: {
     screen: SignIn,
@@ -46,10 +47,19 @@ const FahenTab = StackNavigator({
   ChatScreen: { screen: FaHen },
   WelcomeScreen: { screen: WelcomeScreen },
 })
+const ClippingsTab = StackNavigator({
 
+  Clippings: {screen: ClippingsScreen}
+})
 export const Nav = TabNavigator({
-  Home: { screen: SecretsTab },
-  //FaHen: { screen: FahenTab },
+  Home: {
+    screen: SecretsTab,
+    navigationOptions: {
+      tabBarLabel: 'Feed',
+      tabBarIcon: ({tintColor}) => <Icon name='md-home' color={tintColor} size={24} />
+    }
+  },
+  Clippings: { screen: ClippingsTab },
 }, {lazy:true});
 
 export const createRootNavigator = (signedIn = false) => {
